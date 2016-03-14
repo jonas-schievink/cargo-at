@@ -6,7 +6,7 @@ mod rmdrop;
 use anyerror::AnyError;
 use rmdrop::RemoveOnDrop;
 
-use clap::{App, Arg};
+use clap::{App, AppSettings, Arg, SubCommand};
 
 use std::process::{self, Command};
 use std::fs;
@@ -16,19 +16,22 @@ fn run() -> Result<(), AnyError> {
         .version(env!("CARGO_PKG_VERSION"))
         .author("Jonas Schievink <jonas@schievink.net>")
         .about("Sync source files and run Cargo on a remote host")
-        .arg(Arg::with_name("remote")
-            .takes_value(true)
-            .required(true))
-        .arg(Arg::with_name("port")
-            .short("p")
-            .long("port")
-            .takes_value(true))
-        .arg(Arg::with_name("subcommand")
-            .takes_value(true)
-            .required(true)
-            .multiple(true))
+        .subcommand(SubCommand::with_name("at")
+            .arg(Arg::with_name("remote")
+                .takes_value(true)
+                .required(true))
+            .arg(Arg::with_name("port")
+                .short("p")
+                .long("port")
+                .takes_value(true))
+            .arg(Arg::with_name("subcommand")
+                .takes_value(true)
+                .required(true)
+                .multiple(true)))
+        .setting(AppSettings::SubcommandRequired)
         .get_matches();
 
+    let matches = matches.subcommand_matches("at").unwrap();
     let remote: &str = matches.value_of("remote").unwrap();
     let subcmd: Vec<&str> = matches.values_of("subcommand").unwrap().collect();
     let port: Option<u16> = match matches.value_of("port") {
