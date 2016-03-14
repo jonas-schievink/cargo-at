@@ -1,0 +1,8 @@
+[package]
+name = "cargo-at"
+version = "0.1.0"
+authors = ["Jonas Schievink <jonas@schievink.net>"]
+license = "Apache-2.0/MIT"
+
+[dependencies]
+clap = { version = "2.0", default-features = false }
