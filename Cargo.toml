@@ -3,6 +3,10 @@ name = "cargo-at"
 version = "0.1.0"
 authors = ["Jonas Schievink <jonas@schievink.net>"]
 license = "Apache-2.0/MIT"
+repository = "https://github.com/jonas-schievink/cargo-at"
+description = """
+Compile and run your project on a (fast) remote host
+"""
 
 [dependencies]
 clap = { version = "2.0", default-features = false }
