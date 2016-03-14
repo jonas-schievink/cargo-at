@@ -16,7 +16,9 @@ fn run() -> Result<(), AnyError> {
         .version(env!("CARGO_PKG_VERSION"))
         .author("Jonas Schievink <jonas@schievink.net>")
         .about("Sync source files and run Cargo on a remote host")
+        .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(SubCommand::with_name("at")
+            .setting(AppSettings::TrailingVarArg)
             .arg(Arg::with_name("remote")
                 .takes_value(true)
                 .required(true))
@@ -28,7 +30,6 @@ fn run() -> Result<(), AnyError> {
                 .takes_value(true)
                 .required(true)
                 .multiple(true)))
-        .setting(AppSettings::SubcommandRequired)
         .get_matches();
 
     let matches = matches.subcommand_matches("at").unwrap();
